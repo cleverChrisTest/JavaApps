@@ -34,6 +34,39 @@ public class Cronos {
         }
     }
     
+    /**
+     * Counts down starting in the introduced time.
+     * @param hr
+     * @param mn
+     * @param sc 
+     */
+    public void countDown(int hr, int mn, int sc) {
+        byte i;
+        hour = (byte) hr;
+        min = (byte) mn;
+        sec = (byte) sc;
+
+        while (true) {
+            sec--;
+            timer(1000);
+            if (hour > 0 && min == 0 && sec < 0) {
+                hour--;
+                min = 59;
+                sec = 59;
+            } else if (hour > 0 && min > 0 && sec < 0) {
+                min--;
+                sec = 59;
+            } else if (hour == 0 && min > 0 && sec < 0){
+                min--;
+                sec = 59;
+            } else if (hour == 0 && min == 0 && sec == 0) {
+                printTime(hour, min, sec);
+                break;
+            }
+            printTime(hour, min, sec);
+        }
+    }
+    
     public void printTime(byte hour, byte min, byte sec){
         System.out.format("%02d", hour);
         System.out.format(":%02d:", min);
